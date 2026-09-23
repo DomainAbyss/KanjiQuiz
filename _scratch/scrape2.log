@@ -1,0 +1,34 @@
+  n5 page 1: 48 kartu, +48 baru (total 48)
+  n5 page 2: 31 kartu, +31 baru (total 79)
+  n5 page 3: 31 kartu, +0 baru (total 79)
+[n5] TOTAL 79 kanji
+  n4 page 1: 48 kartu, +48 baru (total 48)
+  n4 page 2: 48 kartu, +48 baru (total 96)
+  n4 page 3: 48 kartu, +48 baru (total 144)
+  n4 page 4: 23 kartu, +23 baru (total 167)
+  n4 page 5: 23 kartu, +0 baru (total 167)
+[n4] TOTAL 167 kanji
+  n3 page 1: 48 kartu, +48 baru (total 48)
+  n3 page 2: 48 kartu, +48 baru (total 96)
+  n3 page 3: 48 kartu, +48 baru (total 144)
+  n3 page 4: 48 kartu, +48 baru (total 192)
+  n3 page 5: 48 kartu, +48 baru (total 240)
+  n3 page 6: 48 kartu, +48 baru (total 288)
+  n3 page 7: 48 kartu, +48 baru (total 336)
+  n3 page 8: 48 kartu, +48 baru (total 384)
+  n3 page 9: 32 kartu, +32 baru (total 416)
+  n3 page 10: 32 kartu, +0 baru (total 416)
+[n3] TOTAL 416 kanji
+  n2 page 1: 48 kartu, +48 baru (total 48)
+Traceback (most recent call last):
+  File "D:\PROJECT\DataSense\KanjiQuiz\scripts\scrape_kanji.py", line 227, in <module>
+    main()
+  File "D:\PROJECT\DataSense\KanjiQuiz\scripts\scrape_kanji.py", line 167, in main
+    h = get_cached("list", f"{lv}_p{page}", f"{BASE}/jlpt/{lv}?page={page}")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECT\DataSense\KanjiQuiz\scripts\scrape_kanji.py", line 48, in get_cached
+    h = get(url)
+        ^^^^^^^^
+  File "D:\PROJECT\DataSense\KanjiQuiz\scripts\scrape_kanji.py", line 33, in get
+    raise RuntimeError(f"GAGAL {url}: {last}")
+RuntimeError: GAGAL https://kanji.jepang.org/jlpt/n2?page=2: HTTP Error 429: Too Many Requests

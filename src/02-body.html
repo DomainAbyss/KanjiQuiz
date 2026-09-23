@@ -1,0 +1,186 @@
+<div class="topbar">
+  <div class="wrap inner">
+    <button class="iconbtn" id="btnMenu" title="Menu"><i class="fa-solid fa-bars"></i></button>
+    <div class="brand"><span class="mk jp">漢字</span><small>Kanji Quizzer</small></div>
+    <div class="spacer"></div>
+    <div class="tb-stat" id="topStat">
+      <span class="scorechip ok"><i class="fa-solid fa-check"></i><span id="statOk">0</span></span>
+      <span class="scorechip no"><i class="fa-solid fa-xmark"></i><span id="statNo">0</span></span>
+      <span class="rem" id="statRem">Remaining: 0</span>
+    </div>
+  </div>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="dh">
+    <div class="brand"><span class="mk jp">漢字</span><small>Menu</small></div>
+    <button class="iconbtn" id="btnCloseDrawer"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="dnav">
+    <button class="ditem on" id="navHome"><span class="ic"><i class="fa-solid fa-house"></i></span> Level Select</button>
+    <button class="ditem" id="navLang"><span class="ic"><i class="fa-solid fa-language"></i></span> <span id="langLabel">Bahasa: Indonesia</span></button>
+    <button class="ditem" id="navMode"><span class="ic"><i class="fa-solid fa-layer-group"></i></span> <span id="modeLabel">Soal: Kanji → Arti</span></button>
+    <button class="ditem" id="navRefs"><span class="ic"><i class="fa-solid fa-circle-info"></i></span> Referensi Data</button>
+    <div class="dsep"></div>
+    <button class="ditem" id="navSearch"><span class="ic"><i class="fa-solid fa-magnifying-glass"></i></span> Search / Dictionary</button>
+    <button class="ditem" id="navCollection"><span class="ic"><i class="fa-solid fa-star"></i></span> My Collection</button>
+    <button class="ditem" id="navListen"><span class="ic"><i class="fa-solid fa-volume-high"></i></span> Listening Quiz</button>
+    <button class="ditem" id="navRoadmap"><span class="ic"><i class="fa-solid fa-route"></i></span> JLPT Roadmap</button>
+    <button class="ditem" id="navDiagnostic"><span class="ic"><i class="fa-solid fa-stethoscope"></i></span> Diagnostic Test</button>
+    <button class="ditem" id="navAchievements"><span class="ic"><i class="fa-solid fa-trophy"></i></span> Achievement</button>
+    <div class="dsep"></div>
+    <button class="ditem" id="navRestart"><span class="ic"><i class="fa-solid fa-rotate-right"></i></span> Ulangi Set Ini</button>
+    <button class="ditem" id="navResume"><span class="ic"><i class="fa-solid fa-play"></i></span> Lanjutkan Quiz</button>
+    <button class="ditem" id="navFinish"><span class="ic"><i class="fa-solid fa-flag-checkered"></i></span> Selesaikan Quiz</button>
+  </div>
+  <div class="dfoot">Sumber data: kanji.jepang.org &amp; elzup/jlpt-word-list</div>
+</div>
+<div class="scrim hidden" id="scrim"></div>
+
+<!-- ============ HOME ============ -->
+<section class="screen active" id="scrHome">
+  <div class="wrap">
+    <div class="hero">
+      <h1>Kanji Quizzer</h1>
+      <p>Latihan kanji &amp; kosakata JLPT N5 sampai N1 — pilihan ganda, arti Indonesia / Inggris.</p>
+    </div>
+    <div class="tabs">
+      <button id="tabKanji" class="on"><i class="fa-solid fa-torii-gate"></i> Kanji</button>
+      <button id="tabVocab"><i class="fa-solid fa-book"></i> Vocabulary</button>
+    </div>
+    <div class="lvgrid" id="lvGrid"></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="screen" id="scrQuiz">
+  <div class="wrap">
+    <div class="quizgrid">
+      <!-- left : flashcard -->
+      <div>
+        <div class="fcard">
+          <div class="fc-top" id="fcTop"></div>
+          <div class="fc-foot" id="fcFoot"></div>
+        </div>
+        <div class="fc-hint" id="fcHint">Swipe atau tekan tombol apa saja untuk kartu berikutnya</div>
+      </div>
+
+      <!-- right : options -->
+      <div class="qpanel">
+        <div class="pillrow">
+          <button class="pill" data-lang="id">Indonesia</button>
+          <button class="pill" data-lang="en">English</button>
+          <button class="pill" data-lang="jp">Kana</button>
+        </div>
+        <div class="opts" id="opts"></div>
+        <div class="notice" id="qNote"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEARCH / DICTIONARY ============ -->
+<section class="screen" id="scrSearch">
+  <div class="wrap">
+    <div class="pagehead"><h2><i class="fa-solid fa-magnifying-glass"></i> Search / Dictionary</h2><p>Cari seluruh data Kanji dan Vocabulary: kanji, kata Jepang, kana, romaji, arti Indonesia, dan English.</p></div>
+    <div class="searchbar"><input id="dictQ" placeholder="Contoh: 本, hon, buku, はなし, talk..."><button class="btn pri" id="dictBtn"><i class="fa-solid fa-search"></i> Cari</button></div>
+    <div class="dictgrid"><div class="dictres" id="dictRes"></div><div class="dictdetail" id="dictDetail"><div class="empty"><i class="fa-solid fa-book-open"></i><b>Pilih hasil pencarian</b><span>Detail kanji/kosakata akan tampil di sini.</span></div></div></div>
+  </div>
+</section>
+
+<!-- ============ MY COLLECTION ============ -->
+<section class="screen" id="scrCollection">
+  <div class="wrap">
+    <div class="pagehead"><h2><i class="fa-solid fa-star"></i> My Collection</h2><p>Favorite Kanji, Favorite Vocabulary, Kanji Sulit, dan Vocabulary Sulit disimpan di browser ini.</p></div>
+    <div class="tabs smalltabs"><button class="on" data-col="favKanji">Favorite Kanji</button><button data-col="favVocab">Favorite Vocabulary</button><button data-col="hardKanji">Kanji Sulit</button><button data-col="hardVocab">Vocabulary Sulit</button></div>
+    <div class="colActions"><button class="btn pri" id="colQuiz"><i class="fa-solid fa-play"></i> Quiz Collection</button><button class="btn gh" id="colReview"><i class="fa-solid fa-clone"></i> Review Collection</button><button class="btn gh" id="colRandom"><i class="fa-solid fa-shuffle"></i> Random Collection</button></div>
+    <div class="collectionList" id="collectionList"></div>
+  </div>
+</section>
+
+<!-- ============ LISTENING QUIZ ============ -->
+<section class="screen" id="scrListen">
+  <div class="wrap">
+    <div class="pagehead"><h2><i class="fa-solid fa-volume-high"></i> Listening Quiz</h2><p>Dengarkan suara Jepang dulu. Teks Jepang tidak ditampilkan sampai kamu menjawab.</p></div>
+    <div class="listenPanel"><button class="bigbtn" id="listenStart"><i class="fa-solid fa-play"></i> Start Listening N5</button><div class="listenArea hidden" id="listenArea"><div class="soundcard"><i class="fa-solid fa-volume-high"></i><b>Apa kata yang kamu dengar?</b><button class="btn pri" id="listenPlay"><i class="fa-solid fa-volume-high"></i> Play</button><button class="btn gh" id="listenReplay"><i class="fa-solid fa-rotate-right"></i> Replay</button></div><div class="opts" id="listenOpts"></div><div class="notice" id="listenNote"></div></div></div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="screen" id="scrRoadmap">
+  <div class="wrap">
+    <div class="pagehead"><h2><i class="fa-solid fa-route"></i> JLPT Roadmap</h2><p>Ringkasan perkembangan belajar dari N5 sampai N1 berdasarkan progress lokal.</p></div>
+    <div class="roadmap" id="roadmapBox"></div>
+  </div>
+</section>
+
+<!-- ============ DIAGNOSTIC ============ -->
+<section class="screen" id="scrDiagnostic">
+  <div class="wrap">
+    <div class="pagehead"><h2><i class="fa-solid fa-stethoscope"></i> Diagnostic Test</h2><p>Tes awal 50 soal untuk melihat kekuatan Kanji Recognition, Meaning, Reading, dan Vocabulary. Tidak mengubah progress utama.</p></div>
+    <div class="diagPanel" id="diagPanel"></div>
+  </div>
+</section>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<section class="screen" id="scrAchievements">
+  <div class="wrap">
+    <div class="pagehead"><h2><i class="fa-solid fa-trophy"></i> Achievements</h2><p>Pencapaian tambahan untuk memberi target belajar. Tidak mempengaruhi mastery utama.</p></div>
+    <div class="achGrid" id="achGrid"></div>
+  </div>
+</section>
+
+<!-- ============ REFERENSI ============ -->
+<div class="overlay hidden" id="ovRefs">
+  <div class="modal refmodal">
+    <div class="mhead refhead">
+      <div class="kicker">REFERENSI DATA</div>
+      <div class="refbig"><i class="fa-solid fa-database"></i></div>
+      <div class="sub">Sumber data yang dipakai Kanji Quizzer</div>
+    </div>
+    <div class="mbody refs">
+      <div class="refitem">
+        <b><i class="fa-solid fa-torii-gate"></i> Kanji JLPT & detail kanji</b>
+        <span>kanji.jepang.org — level N5–N1, arti Indonesia/English, Kun/On, radikal, jumlah goresan, dan contoh kombinasi kata.</span>
+      </div>
+      <div class="refitem">
+        <b><i class="fa-solid fa-book-open"></i> Vocabulary JLPT</b>
+        <span>elzup/jlpt-word-list — daftar kosakata per level sebagai sumber daftar kata awal.</span>
+      </div>
+      <div class="refitem">
+        <b><i class="fa-solid fa-language"></i> Detail kosakata</b>
+        <span>kanji.jepang.org/kosakata/&lt;kata&gt; — arti, bacaan, romaji, dan kanji pembentuk. Jika halaman belum ada, arti fallback dari daftar elzup.</span>
+      </div>
+      <div class="refitem muted">
+        <b><i class="fa-solid fa-wifi"></i> Offline</b>
+        <span>Semua data sudah di-embed di index.html, jadi aplikasi bisa dibuka langsung tanpa internet.</span>
+      </div>
+      <button class="bigbtn" id="refClose"><i class="fa-solid fa-check"></i> Oke</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="overlay hidden" id="ovSet">
+  <div class="modal">
+    <div class="mhead">
+      <div class="kicker" id="mKicker">SET COMPLETE</div>
+      <div class="pctbig" id="mPct">0%</div>
+      <div class="sub" id="mSub">0 of 0 correct</div>
+      <div class="badge" id="mBadge">JLPT N5 — Random</div>
+    </div>
+    <div class="mbody">
+      <div class="progline">
+        <span id="mProgLabel">Progress</span>
+        <span class="v"><span class="p" id="mProgPct">0%</span><span class="plus" id="mProgPlus">+0%</span></span>
+      </div>
+      <div class="bar"><i id="mBar" style="width:0%"></i></div>
+      <div class="mlist hidden" id="mList"></div>
+      <button class="bigbtn" id="mAgain"><span class="mini"><i class="fa-solid fa-shuffle"></i></span> Random Quiz</button>
+      <div class="tworow">
+        <button class="smbtn" id="mRestart"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+        <button class="smbtn" id="mLevels"><i class="fa-solid fa-bars"></i> Choose Level</button>
+      </div>
+    </div>
+  </div>
+</div>

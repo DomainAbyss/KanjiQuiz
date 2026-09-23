@@ -1,0 +1,7 @@
+daftar kata: 7832
+sudah diproses: 7832 (berhasil 6235)
+perlu diambil: 312
+  100/312 ok=43 fail=57
+  200/312 ok=93 fail=107
+  300/312 ok=128 fail=172
+SELESAI ok=132 fail=180 -> D:\PROJECT\DataSense\KanjiQuiz\data\vocab_raw.jsonl
