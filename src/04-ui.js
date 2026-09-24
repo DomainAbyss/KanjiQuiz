@@ -54,12 +54,43 @@ function renderHome() {
   grid.innerHTML = html;
   Array.prototype.forEach.call(grid.querySelectorAll('.lvcard'), function (b) {
     b.onclick = function () {
-      if (!startSet(b.dataset.lv)) return;
-      go('Quiz'); renderQuiz();
+      showCountPicker(b.dataset.lv);
     };
   });
   $('tabKanji').classList.toggle('on', S.kind === 'kanji');
   $('tabVocab').classList.toggle('on', S.kind === 'vocab');
+}
+
+/* ---------- COUNT PICKER popup ---------- */
+var PENDING_LV = null;
+function showCountPicker(lv) {
+  PENDING_LV = lv;
+  var n = (DB[S.kind][lv] || []).length;
+  var kindLabel = S.kind === 'kanji' ? 'Kanji' : 'Kosakata';
+  $('cntKicker').textContent = 'JLPT ' + lv + ' — ' + kindLabel;
+  $('cntSub').textContent = 'Total tersedia: ' + n + ' ' + kindLabel.toLowerCase();
+  var counts = [10, 25, 50];
+  var html = '';
+  counts.forEach(function (c) {
+    var dis = c > n;
+    html += '<button class="cntbtn' + (dis ? '' : '') + '"' + (dis ? ' disabled style="opacity:.4;cursor:not-allowed"' : '') + ' data-cnt="' + c + '">' +
+      '<span class="cnum">' + c + '</span>' +
+      '<span class="clbl">soal</span></button>';
+  });
+  html += '<button class="cntbtn all" data-cnt="' + n + '">' +
+    '<span class="cnum"><i class="fa-solid fa-infinity"></i> ALL</span>' +
+    '<span class="clbl">' + n + ' ' + kindLabel.toLowerCase() + '</span></button>';
+  $('cntGrid').innerHTML = html;
+  Array.prototype.forEach.call($('cntGrid').querySelectorAll('.cntbtn'), function (b) {
+    if (b.disabled) return;
+    b.onclick = function () {
+      var cnt = parseInt(b.dataset.cnt, 10);
+      $('ovCount').classList.add('hidden');
+      if (!startSet(PENDING_LV, { count: cnt })) return;
+      go('Quiz'); renderQuiz();
+    };
+  });
+  $('ovCount').classList.remove('hidden');
 }
 
 /* ---------- QUIZ ---------- */
@@ -562,6 +593,8 @@ function init() {
     $('navAchievements').onclick = function () { closeDrawer(); go('Achievements'); };
     $('refClose').onclick = function () { $('ovRefs').classList.add('hidden'); };
     $('ovRefs').onclick = function (e) { if (e.target === $('ovRefs')) $('ovRefs').classList.add('hidden'); };
+    $('cntCancel').onclick = function () { $('ovCount').classList.add('hidden'); };
+    $('ovCount').onclick = function (e) { if (e.target === $('ovCount')) $('ovCount').classList.add('hidden'); };
     $('navRestart').onclick = function () { closeDrawer(); restartSame(); };
     $('navResume').onclick = function () { closeDrawer(); if (S.cards.length) { go('Quiz'); renderQuiz(); } };
     $('navFinish').onclick = function () { closeDrawer(); if (S.cards.length && !S.done) { S.idx = S.cards.length - 1; S.answered = true; if (S.pick < 0) S.pick = -2; finish(); } };
@@ -590,6 +623,10 @@ function init() {
     });
 
     document.addEventListener('keydown', function (e) {
+      if (!$('ovCount').classList.contains('hidden')) {
+        if (e.key === 'Escape') $('ovCount').classList.add('hidden');
+        return;
+      }
       if (!$('ovSet').classList.contains('hidden')) {
         if (e.key === 'Escape') closeModal();
         return;

@@ -4,7 +4,7 @@
 'use strict';
 
 var LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
-var SET_SIZE = 25;          // kartu per sesi
+var SET_SIZE = 25;          // default kartu per sesi (overrideable via opts.count)
 var GRID = 9;               // 3x3 pilihan
 
 var DB = { kanji: null, vocab: null };
@@ -149,7 +149,9 @@ function startSet(level, opts) {
   S.level = level;
   var pool = opts.pool || buildCards(S.kind, level);
   if (!pool.length) { alert('Data level ' + level + ' kosong.'); return false; }
-  var cards = opts.keepOrder ? pool.slice(0, SET_SIZE) : shuffle(pool).slice(0, SET_SIZE);
+  var count = opts.count || SET_SIZE;
+  if (count >= pool.length) count = pool.length;   // ALL or more than available
+  var cards = opts.keepOrder ? pool.slice(0, count) : shuffle(pool).slice(0, count);
   cards.forEach(function (c) { dealChoices(c, pool); });
   S.cards = cards; S.idx = 0; S.ok = 0; S.no = 0; S.answered = false; S.pick = -1; S.done = false;
   S.setStartPct = progressOf(S.kind, level).pct;
